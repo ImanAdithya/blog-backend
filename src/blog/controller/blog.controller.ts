@@ -22,6 +22,12 @@ export class BlogController {
     return this.blogService.findOne(id);
   }
 
+  @Get('user/:userId')
+    getPostsByUser(@Param('userId') userId: number) {
+    return this.blogService.findByUserId(userId);
+  }
+
+
   @Put(':id')
   update(@Param('id') id: number, @Body() dto: UpdateBlogDto) {
     return this.blogService.update(id, dto);

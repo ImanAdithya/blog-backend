@@ -57,4 +57,17 @@ export class BlogService {
     return { code: 200, message: 'Deleted successfully', data: null };
   }
 
+  async findByUserId(userId: number) {
+    const blogs = await this.blogRepository.find({
+      where: { user: { id: userId } },
+    });
+
+    return {
+      code: 200,
+      message: `Blogs for user ${userId} fetched successfully`,
+      data: blogs,
+    };
+  } 
+
+
 }
