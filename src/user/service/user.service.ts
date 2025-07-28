@@ -8,7 +8,13 @@ import { Repository } from 'typeorm';
 export class UserService {
     constructor(@InjectRepository(User) private userRepository : Repository<User>){}
 
-    createUser(user:UserParams){
-        this.userRepository.create(user);
-    }
+   async createUser(user: UserParams){
+   const newUser = this.userRepository.create(user);
+    const savedUser = await this.userRepository.save(newUser);
+    return {
+      code: 201,
+      message: 'User created successfully',
+      data: savedUser,
+    };
+  }
 }
