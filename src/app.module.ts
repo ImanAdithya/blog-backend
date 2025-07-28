@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entity/User';
 import { UserModule } from './user/user.module';
 import { BlogModule } from './blog/blog.module';
+import { Blog } from './entity/Blog';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { BlogModule } from './blog/blog.module';
       username: 'root',
       password: '12345678',
       database: 'blog',
-      entities:[User],
+      entities:[User,Blog],
       synchronize: true, 
     }),
     UserModule,
