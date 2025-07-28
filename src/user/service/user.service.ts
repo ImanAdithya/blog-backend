@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto } from 'src/auth/dto/register.dto';
 import { User } from 'src/entity/User';
 import { UserParams } from 'src/util/type';
 import { Repository } from 'typeorm';
@@ -8,13 +9,13 @@ import { Repository } from 'typeorm';
 export class UserService {
     constructor(@InjectRepository(User) private userRepository : Repository<User>){}
 
-   async createUser(user: UserParams){
-   const newUser = this.userRepository.create(user);
-    const savedUser = await this.userRepository.save(newUser);
-    return {
-      code: 201,
-      message: 'User created successfully',
-      data: savedUser,
-    };
-  }
+async createUser(dto: CreateUserDto): Promise<User> {
+    const newUser = this.userRepository.create(dto);
+    return this.userRepository.save(newUser);
+}
+
+async findByUsername(username: string): Promise<User | null> {
+  return this.userRepository.findOne({ where: { username } });
+}
+
 }
