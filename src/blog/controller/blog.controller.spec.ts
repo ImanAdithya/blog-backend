@@ -5,7 +5,7 @@ import { BlogService } from '../service/blog.service';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { CreateBlogDto } from '../dto/create-blog.dto';
 import { UpdateBlogDto } from '../dto/update-blog.dto';
-
+import { Query } from '@nestjs/common';
 
 const mockBlogService = {
   create: jest.fn().mockImplementation((dto) => ({ id: 1, ...dto })),
@@ -14,6 +14,9 @@ const mockBlogService = {
   findByUserId: jest.fn().mockImplementation((userId) => [{ id: 1, userId }]),
   update: jest.fn().mockImplementation((id, dto) => ({ id, ...dto })),
   delete: jest.fn().mockImplementation((id) => ({ deleted: true })),
+  searchByTitle: jest.fn().mockImplementation((title) => [
+    { id: 1, title: `Matched: ${title}` },
+  ]),
 };
 
 const mockJwtAuthGuard = {
@@ -69,5 +72,11 @@ describe('BlogController', () => {
 
   it('should delete a blog post', async () => {
     expect(await controller.delete(4)).toEqual({ deleted: true });
+  });
+
+  it('should return blogs matching the title', async () => {
+    expect(await controller.searchByTitle('nestjs')).toEqual([
+      { id: 1, title: 'Matched: nestjs' },
+    ]);
   });
 });

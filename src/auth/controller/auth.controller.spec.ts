@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from '../service/auth.service';
+import { UnauthorizedException } from '@nestjs/common';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -30,21 +31,27 @@ describe('AuthController', () => {
   });
 
   describe('login', () => {
-    it('should return 401 code when invalid credentials', async () => {
+    it('should throw UnauthorizedException when credentials are invalid', async () => {
       mockAuthService.validateUser.mockResolvedValue(null);
 
-      const result = await controller.login({ username: 'wrong', password: 'wrong' });
-      expect(result).toEqual({ code: 401, message: 'Invalid credentials', data: null });
+      await expect(
+        controller.login({ username: 'wrong', password: 'wrong' })
+      ).rejects.toThrow(UnauthorizedException);
+
       expect(mockAuthService.validateUser).toHaveBeenCalledWith('wrong', 'wrong');
       expect(mockAuthService.login).not.toHaveBeenCalled();
     });
 
-    it('should call login and return token when credentials are valid', async () => {
+    it('should return login response when credentials are valid', async () => {
       const user = { id: 1, username: 'user1' };
       const loginResponse = {
         code: 200,
         message: 'Login successful',
-        data: { access_token: 'token' },
+        data: {
+          userId: 1,
+          username: 'user1',
+          access_token: 'token',
+        },
       };
 
       mockAuthService.validateUser.mockResolvedValue(user);
@@ -59,7 +66,7 @@ describe('AuthController', () => {
   });
 
   describe('register', () => {
-    it('should call register and return success message', async () => {
+    it('should return registration success response', async () => {
       const dto = { username: 'newuser', password: 'newpass' };
       const registerResponse = {
         code: 201,
