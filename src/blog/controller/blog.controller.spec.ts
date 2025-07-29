@@ -7,7 +7,6 @@ import { CreateBlogDto } from '../dto/create-blog.dto';
 import { UpdateBlogDto } from '../dto/update-blog.dto';
 
 
-// 🧪 Mock BlogService
 const mockBlogService = {
   create: jest.fn().mockImplementation((dto) => ({ id: 1, ...dto })),
   findAll: jest.fn().mockReturnValue([{ id: 1, title: 'Test Post' }]),
@@ -17,7 +16,6 @@ const mockBlogService = {
   delete: jest.fn().mockImplementation((id) => ({ deleted: true })),
 };
 
-// ✅ Mock JwtAuthGuard to always allow access
 const mockJwtAuthGuard = {
   canActivate: (context: ExecutionContext) => true,
 };
