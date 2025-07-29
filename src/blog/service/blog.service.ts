@@ -92,4 +92,22 @@ export class BlogService {
       throw new InternalServerErrorException(error.message || 'Error fetching blogs for user');
     }
   }
+
+  async searchByTitle(title: string) {
+    try {
+      const blogs = await this.blogRepository
+        .createQueryBuilder('blog')
+        .where('LOWER(blog.title) LIKE :title', { title: `%${title.toLowerCase()}%` })
+        .getMany();
+
+      return {
+        code: 200,
+        message: `Blogs with title containing '${title}'`,
+        data: blogs,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message || 'Error searching blogs by title');
+    }
+  }
+
 }

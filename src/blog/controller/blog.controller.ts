@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { BlogService } from '../service/blog.service';
 import { CreateBlogDto } from '../dto/create-blog.dto';
 import { UpdateBlogDto } from '../dto/update-blog.dto';
@@ -42,4 +42,9 @@ export class BlogController {
   delete(@Param('id') id: number) {
     return this.blogService.delete(id);
   }
+  @Get('search')
+  async searchByTitle(@Query('title') title: string) {
+  return this.blogService.searchByTitle(title);
+}
+
 }
