@@ -15,7 +15,6 @@ export class BlogController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.blogService.findAll();
   }
