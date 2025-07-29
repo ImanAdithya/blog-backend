@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Request, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../service/auth.service';
 import { LoginDto } from '../dto/login.dto';
 
@@ -11,9 +11,9 @@ export class AuthController {
   async login(@Body() dto: LoginDto) {
     const user = await this.authService.validateUser(dto.username, dto.password);
     if (!user) {
-      return { code: 401, message: 'Invalid credentials', data: null };
-    }
-    return this.authService.login(user);
+    throw new UnauthorizedException('Invalid credentials');
+  }
+  return this.authService.login(user);
   }
 
   @Post('register')
