@@ -21,9 +21,13 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Project Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project is a backend API built with **NestJS** that provides:
+
+- **User Authentication** using JWT with login, logout, and registration.
+- **Blog CRUD** operations to create, read, update, and delete blog posts.
+- **Unit Testing** with Jest to ensure code quality and reliability.
 
 ## Project setup
 
@@ -56,6 +60,86 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Features
+
+### Authentication
+
+- **Register** a new user with hashed password storage.
+- **Login** with username and password, returning a JWT token.
+- **Logout** support by token blacklist (demo implementation).
+- **JWT-based authorization** for protected routes.
+
+### Blog Management
+
+- Create new blog posts.
+- Retrieve all or single blog posts.
+- Update existing blog posts.
+- Delete blog posts.
+
+### Testing
+
+- Unit tests for services and controllers.
+- Mock dependencies for isolated tests.
+- Test coverage for authentication and blog features.
+
+---
+
+## Tech Stack
+
+- [NestJS](https://nestjs.com/) - Node.js framework
+- [TypeScript](https://www.typescriptlang.org/)
+- [JWT](https://jwt.io/) - JSON Web Token for auth
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js) - Password hashing
+- [Jest](https://jestjs.io/) - Testing framework
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 16
+- npm or yarn
+- A database (e.g., PostgreSQL, MySQL) and its connection configured (if used)
+
+### Installation
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+npm install
+# or
+yarn install
+```
+
+### Running the App
+
+```bash
+npm run start:dev
+# or
+yarn start:dev
+```
+
+The server will run on `http://localhost:3000` by default.
+
+---
+
+## API Endpoints
+
+### Auth
+
+- `POST /auth/register` - Register a new user  
+- `POST /auth/login` - Login and receive JWT token  
+- `POST /auth/logout` - Logout user (token blacklist)
+
+### Blog
+
+- `GET /blogs` - Get all blogs  
+- `GET /blogs/:id` - Get blog by ID  
+- `POST /blogs` - Create new blog (protected)  
+- `PATCH /blogs/:id` - Update blog (protected)  
+- `DELETE /blogs/:id` - Delete blog (protected)
 
 ## Deployment
 
