@@ -19,6 +19,7 @@ This project is a backend API built with **NestJS** that provides:
 $ npm install
 
 create database as blog
+change mysql credentials
 
 To get started, run npm install to install all necessary dependencies. After installation, open the app.module.ts file and configure your MySQL credentials (such as host, port, username, password, and database) inside the TypeOrmModule.forRoot() section. Make sure to manually create a MySQL database named "blog" before running the application. This will ensure a proper connection between your NestJS backend and the MySQL database.
 
